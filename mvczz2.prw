@@ -46,6 +46,7 @@ static function OtherObj(oPanel)
     MsWorkTime():New(oPanel)
 return
 
+// Ponto de entrada para cadastro de produtos (MATA010)
 user function ITEM()
     local cIDPE := PARAMIXB[2]
     
