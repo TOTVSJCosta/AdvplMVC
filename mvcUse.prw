@@ -2,22 +2,19 @@
 #include "FWMVCDEF.ch"
 
 user function MVCZZ1()
-RPCSetEnv("99","01")
+    RPCSetEnv("99","01")
     
     local lOK     := .T.
     local oModel  := FWLoadModel("MVCZZ2")
     //local oMdlZZ1 := oModel:GetModel("ZZ1MASTER")
-    local nI, aErros, aCampos
+    local nI, aErros := {}, aCampos := {}
 
     oModel:SetOperation(MODEL_OPERATION_INSERT)
     oModel:Activate()
 
-    aCampos := {}
     aAdd(aCampos, {"ZZ1_FINALI", upper("Busca Logradouras API ViaCEP")})
     aAdd(aCampos, {"ZZ1_METODO", "G"})
     aAdd(aCampos, {"ZZ1_STATUS", "D"})
-
-    aErros := {}
 
     for nI := 1 to len(aCampos)
         //if !oMdlZZ1:SetValue(aCampos[nI,1], aCampos[nI, 2])
@@ -36,9 +33,8 @@ RPCSetEnv("99","01")
 
     If(lOK, nil, mostraErro(aErros))
 
-    oModel:DeActivate()
-
-RPCClearEnv()
+    oModel:DeActivate(
+    RPCClearEnv()
 return
 
 static function mostraErro(aErros)
@@ -50,7 +46,7 @@ static function mostraErro(aErros)
 return
 
 
-user function AddBtn()
+user function AddBtn() AS Array
     local aRet := {{'Executar', 'SALVAR', {|| U_ExecInt()}, 'Executar Integração'}}
 return aRet
 
@@ -89,14 +85,13 @@ user function ExecInt()
     freeObj(oRest)
 return
 
-user function ViaCEP()
+user function ViaCEP() AS Character
     local cCEP := FWInputBox("Insira o CEP que deseja consultar:")
     
     cCEP := '/' + alltrim(cCEP) + "/json"
 return cCEP
 
 static function gravaLog(lOK, cResult)
-    
     local oModel  := FWLoadModel("MVCZZ2")
     local oMdlZZ2 := oModel:GetModel("ZZ2DETAIL")
     local nLines  := oMdlZZ2:Length()
