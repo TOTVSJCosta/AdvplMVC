@@ -6,15 +6,13 @@ static function ModelDef()
     local oModel    := FWLoadModel("MVCZZ1")
 
     oModel:AddGrid("ZZ2DETAIL", "ZZ1MASTER", oStruZZ2)
-    oModel:SetPrimaryKey({"ZZ2_FILIAL", "ZZ2_ID"})
-
     oModel:SetRelation("ZZ2DETAIL", {{"ZZ2_FILIAL", "xFilial('ZZ2')"},{"ZZ2_TASKID", "ZZ1_ID"}}, ZZ2->(IndexKey(1)))
-
     oModel:GetModel("ZZ2DETAIL"):SetOptional(.T.)
+    
     /*oModel:GetModel("ZZ2DETAIL"):SetOnlyView(.T.)
     oModel:GetModel("ZZ2DETAIL"):SetOnlyQuery(.T.)*/
-    oModel:GetModel("ZZ2DETAIL"):SetDescription("Histórico das Integrações")
 
+    oModel:GetModel("ZZ2DETAIL"):SetDescription("Histórico das Integrações")
 return oModel
 
 static function ViewDef()
